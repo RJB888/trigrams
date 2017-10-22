@@ -7,7 +7,7 @@ an input text file, and given a number of words to generate.
 
 def read_book_from_file():
     """."""
-    with open('text.txt', 'r') as book:
+    with open('sherlock.txt', 'r') as book:
         book_contents = book.read()
     return book_contents
 
@@ -19,5 +19,10 @@ def convert_book_to_list_of_words(book):
     """
     book = book.replace('\n', ' ')
     book = book.split(' ')
-    book = [w[0:-1] if not w.isalpha() else w for w in book]
-    return book[0: -1]
+    filtered_book = []
+    for word in book:
+        for c in word:
+            word = ''.join([c for c in word if c.isalpha()])
+        if word:
+            filtered_book.append(word)
+    return filtered_book

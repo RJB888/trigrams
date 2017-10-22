@@ -3,6 +3,7 @@
 Use trigrams algorithm to randomly generate text based on an
 an input text file, and given a number of words to generate.
 """
+from random import sample
 
 
 def read_book_from_file():
@@ -42,12 +43,13 @@ def create_trigram_dict(book_word_list):
                 trigram_dict[dict_key] = [book_word_list[idx + 2]]
     print(trigram_dict)
 
-# def generate_text(book_dict, num):
-#     output_string = ''
-    #start with first key of dict.
-    #append it to the string
-    #if key has multiple values - randomly choose one and append it to the string
-        #else append value to string
-    #break key into list of words, take 2nd word and add it to the value previously appended
-    #make new key with those 2 words.
-    #search dict for new key. -- repeat above if key in dict.
+
+def generate_text(book_dict, num):
+    """."""
+    new_key = sample(list(dict), 1)
+    output_list = new_key.split(' ')
+    while len(output_list) < num:
+        if new_key in book_dict:
+            output_list.append(sample(book_dict[new_key], 1))
+            new_key = output_list[-2] + ' ' + output_list[-1]
+    return ' '.join(output_list)

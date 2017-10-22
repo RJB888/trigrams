@@ -4,11 +4,12 @@ Use trigrams algorithm to randomly generate text based on an
 an input text file, and given a number of words to generate.
 """
 from random import sample
+import sys
 
 
-def read_book_from_file():
+def read_book_from_file(book):
     """."""
-    with open('text.txt', 'r') as book:
+    with open(book, 'r') as book:
         book_contents = book.read()
     return book_contents
 
@@ -26,7 +27,6 @@ def convert_book_to_list_of_words(book):
             word = ''.join([c for c in word if c.isalpha()])
         if word:
             filtered_book.append(word)
-    print(filtered_book)
     return filtered_book
 
 
@@ -41,15 +41,37 @@ def create_trigram_dict(book_word_list):
                 trigram_dict[dict_key].append(book_word_list[idx + 2])
             else:
                 trigram_dict[dict_key] = [book_word_list[idx + 2]]
-    print(trigram_dict)
+    return trigram_dict
 
 
 def generate_text(book_dict, num):
     """."""
-    new_key = sample(list(dict), 1)
+    new_key = ''.join(sample(list(book_dict), 1))
     output_list = new_key.split(' ')
     while len(output_list) < num:
         if new_key in book_dict:
-            output_list.append(sample(book_dict[new_key], 1))
+            output_list.append(''.join(sample(book_dict[new_key], 1)))
             new_key = output_list[-2] + ' ' + output_list[-1]
-    return ' '.join(output_list)
+    return ' '.join(output_list[0:num])
+
+
+def main(book, num):
+    """."""
+    book_text = read_book_from_file(book)
+    filtered_book = convert_book_to_list_of_words(book_text)
+    trigram_dict = create_trigram_dict(filtered_book)
+    return generate_text(trigram_dict, num)
+
+
+if __name__ == '__main__':
+    if len(sys.argv) != 3:
+        print("You used an incorrect number of arguments")
+        sys.exit(1)
+
+    try:
+        output = main(sys.argv[1], int(sys.argv[2]))
+    except RuntimeError:
+        print("There was an issue. Try again with correct parameters")
+        sys.exit()
+
+    print(output)

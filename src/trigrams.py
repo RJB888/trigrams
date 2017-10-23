@@ -8,17 +8,14 @@ import sys
 
 
 def read_book_from_file(book):
-    """."""
+    """take a .txt file and read it into a string"""
     with open(book, 'r') as book:
         book_contents = book.read()
     return book_contents
 
 
 def convert_book_to_list_of_words(book):
-    """Remove whitespace and punctuation from word list.
-
-    and return list.
-    """
+    """Remove whitespace and punctuation from word list and return list."""
     book = book.replace('\n', ' ')
     book = book.split(' ')
     filtered_book = []
@@ -45,7 +42,7 @@ def create_trigram_dict(book_word_list):
 
 
 def generate_text(book_dict, num):
-    """."""
+    """Generate new text with trigram algorithm"""
     new_key = ''.join(sample(list(book_dict), 1))
     output_list = new_key.split(' ')
     while len(output_list) < num:
@@ -56,7 +53,7 @@ def generate_text(book_dict, num):
 
 
 def main(book, num):
-    """."""
+    """Call all necessary functions and return the new trigram text"""
     book_text = read_book_from_file(book)
     filtered_book = convert_book_to_list_of_words(book_text)
     trigram_dict = create_trigram_dict(filtered_book)

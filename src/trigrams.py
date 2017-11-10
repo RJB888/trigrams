@@ -8,7 +8,7 @@ import sys
 
 
 def read_book_from_file(book):
-    """take a .txt file and read it into a string"""
+    """Take a .txt file and read it into a string."""
     with open(book, 'r') as book:
         book_contents = book.read()
     return book_contents
@@ -42,18 +42,21 @@ def create_trigram_dict(book_word_list):
 
 
 def generate_text(book_dict, num):
-    """Generate new text with trigram algorithm"""
+    """Generate new text with trigram algorithm."""
     new_key = ''.join(sample(list(book_dict), 1))
     output_list = new_key.split(' ')
     while len(output_list) < num:
         if new_key in book_dict:
             output_list.append(''.join(sample(book_dict[new_key], 1)))
             new_key = output_list[-2] + ' ' + output_list[-1]
+        else:
+            new_key = ''.join(sample(list(book_dict), 1))
+
     return ' '.join(output_list[0:num])
 
 
 def main(book, num):
-    """Call all necessary functions and return the new trigram text"""
+    """Call all necessary functions and return the new trigram text."""
     book_text = read_book_from_file(book)
     filtered_book = convert_book_to_list_of_words(book_text)
     trigram_dict = create_trigram_dict(filtered_book)

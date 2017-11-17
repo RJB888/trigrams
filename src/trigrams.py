@@ -63,7 +63,7 @@ def main(book, num):
     return generate_text(trigram_dict, num)
 
 
-if __name__ == '__main__':
+if __name__ == '__main__':  # pragma: no cover
     if len(sys.argv) != 3:
         print("You used an incorrect number of arguments")
         sys.exit(1)

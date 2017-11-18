@@ -4,7 +4,7 @@ from trigrams import convert_book_to_list_of_words, create_trigram_dict
 
 
 def get_book():
-    with open('sherlock.txt', 'r') as book:
+    with open('sherlock_small.txt', 'r') as book:
         book = book.read()
     return book
 
